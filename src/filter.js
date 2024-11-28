@@ -9,7 +9,7 @@ function Filter() {
 	const data = [
 		{
 		id:'1',
-		header: "What is Colonoscopy?",
+		header: "What is Colonoscopy?gittest",
 		subheading: <h5>Fasting</h5>,
 		content:"You should fast for at least 6 hours prior to your colonoscopy. You may drink clear fluid up to 2 hours before the procedure but milk is not allowed during the fasting.",
 		subheading1:<h5>Bowel Preparation</h5>,
