@@ -29,6 +29,11 @@ function Filter() {
      
     const [Catstate , CatsetState] = useState([]);
     const [selectedCat, setSelectedCat] = useState('');
+
+	const handleClick1 = (index) => {
+		console.log(index);
+	    // setActiveIndex(index === activeIndex ? -1 : index);
+	};
 	
 	useEffect(() => {
 		const postcat=fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/categories');
@@ -44,13 +49,26 @@ function Filter() {
     const [postState , setPostState] = useState([]);
 
 	useEffect(() => {
-		const post = fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts')
+		// const post = fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts')
+		let postApi = 'https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts';
+        if (selectedCat) {
+            // Find the category ID based on the selected slug
+            const selectedCategory = Catstate.find((cat) => cat.slug === selectedCat);
+			console.log(selectedCategory);
+            if (selectedCategory) {
+                postApi += `?categories=${selectedCategory.id}`;
+            }
+        }
+		// console.log(postApi);
+
+		fetch(postApi)
 		.then((response) => response.json())
 		.then((postList) => {
 			setPostState(postList);
 		})
 		.catch((error) => console.error('Error fetching posts:', error));
-	}, []);
+	}, [selectedCat, Catstate]);
+
 	const stripHtml = (html) => {
 		const tempElement = document.createElement('div');
 		tempElement.innerHTML = html;
@@ -90,7 +108,7 @@ function Filter() {
 			<div className='side-bar-fillter left-side'>
 				<h3>Filter</h3>
 				<div className="col-blogpost">
-				<select name='category_post' value={selectedCat} onChange={e => setSelectedCat(e.target.value)}>
+				<select name='category_post' value={selectedCat} onChange={e=>setSelectedCat(e.target.value)}>
 					<option value="" >Select Category</option>
 					{
 						Catstate.map((cat_detail, id) => {
@@ -101,6 +119,7 @@ function Filter() {
 					}
 				</select>
 				</div>
+				<h1>{selectedCat}</h1>
 			</div>
 			<div className='right-side post-listing'>
 				{postState.length > 0 ? (
