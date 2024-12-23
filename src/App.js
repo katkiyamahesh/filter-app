@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './filter-style.css';
 import Filter from './filter';
 
 function App() {

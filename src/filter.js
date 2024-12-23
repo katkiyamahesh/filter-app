@@ -1,144 +1,127 @@
 import React, { useEffect, useState } from 'react';
 
 function Filter() {
-    const [activeIndex, setActiveIndex] = useState(-1);
-	const handleClick = (index) => {
-	    setActiveIndex(index === activeIndex ? -1 : index);
-	};
-
-	const data = [
-		{
-		id:'1',
-		header: "What is Colonoscopy?gittest",
-		subheading: <h5>Fasting</h5>,
-		content:"You should fast for at least 6 hours prior to your colonoscopy. You may drink clear fluid up to 2 hours before the procedure but milk is not allowed during the fasting.",
-		subheading1:<h5>Bowel Preparation</h5>,
-		content1:"For a successful colonoscopy, you should follow the instruction of the bowel preparation given to you.In general, most medication should be continued before the colonoscopy with the exception of diabetes medication and blood thinners. Diabetic medication should be omitted during fasting. You should check with your doctor if your blood thinner needs to be discontinued prior to the procedure."
-		},
-		{
-		id:'2',
-		header: "What Happens After A Colonoscopy?",
-		content: "As you will be given medication to make you sleepy, you must not drive, work or make any important decision after the procedure. Medical Certificate will be issued if needed and you should rest at home for the rest of the day.",
-		},
-		{
-		id:'3',
-		header: "Can I Use Medisave & Insurance?",
-		content: "We collaborate with the vast majority of health insurers. Please feel free to contact our friendly clinic staff to assist you with the financing options.",
-		},
-	];
-     
-    const [Catstate , CatsetState] = useState([]);
+    const [Catstate, CatsetState] = useState([]);
     const [selectedCat, setSelectedCat] = useState('');
+	// WP Total Post
+    const [TotalPost, setTotalPost] = useState('');
 
-	const handleClick1 = (index) => {
-		console.log(index);
-	    // setActiveIndex(index === activeIndex ? -1 : index);
-	};
+    // Pagination post
+    const [currentPage, setCurrentPage] = useState(1);
+	const [totalPages, setTotalPages] = useState(1);
+    const [recordsPerPage] = useState(10);
 	
-	useEffect(() => {
-		const postcat=fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/categories');
-		const catjson = postcat.then((res,date)=>{
-			// console.log(respon);
-			return res.json();
-		}).then((catjson)=>{
-			// console.log(catjson);
-			CatsetState(catjson);
-		});
-	}, []);
+    const [postState, setPostState] = useState([]);
 
-    const [postState , setPostState] = useState([]);
+    // Fetch categories
+    useEffect(() => {
+        fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/categories')
+            .then((response) => response.json())
+            .then((catjson) => {
+                CatsetState(catjson);
+            })
+            .catch((error) => console.error('Error fetching categories:', error));
+    }, []);
 
-	useEffect(() => {
-		// const post = fetch('https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts')
-		let postApi = 'https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts';
+    // Fetch posts based on selected category
+    useEffect(() => {
+        // let postApi = 'https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts';
+        let postApi = `https://dev-wpmahesh.pantheonsite.io/wp-json/wp/v2/posts?page=${currentPage}&per_page=${recordsPerPage}`;
         if (selectedCat) {
-            // Find the category ID based on the selected slug
             const selectedCategory = Catstate.find((cat) => cat.slug === selectedCat);
-			console.log(selectedCategory);
             if (selectedCategory) {
-                postApi += `?categories=${selectedCategory.id}`;
+                postApi += `&categories=${selectedCategory.id}`;
             }
         }
-		// console.log(postApi);
+        fetch(postApi)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+				const totalPagesFromHeader = response.headers.get("x-wp-totalpages");
+				if (totalPagesFromHeader) {
+					setTotalPages(parseInt(totalPagesFromHeader, 10));
+				}
+				const numPosts = response.headers.get('x-wp-total');
+				setTotalPost(numPosts);
 
-		fetch(postApi)
-		.then((response) => response.json())
-		.then((postList) => {
-			setPostState(postList);
-		})
-		.catch((error) => console.error('Error fetching posts:', error));
-	}, [selectedCat, Catstate]);
+                return response.json();
+            })
+            .then((postList) => {
+                setPostState(postList);
+            })
+            .catch((error) => console.error('Error fetching posts:', error));
+    }, [currentPage, selectedCat, Catstate]);
+    const stripHtml = (html) => {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = html;
+        return tempElement.textContent || tempElement.innerText || '';
+    };
 
-	const stripHtml = (html) => {
-		const tempElement = document.createElement('div');
-		tempElement.innerHTML = html;
-		return tempElement.textContent || tempElement.innerText || '';
-	};
-	
-  return (
-    <div className="main-container">
-		<section className="section-frequently">
-			<div className="col-freuently">
-				<div className="freuently-heading">
-					<h2>Learn More</h2>
-					<h3>Frequently Asked Questions</h3>
-				</div>
-					{data.map((section, id) => (
-						<div key={id}>
-							<div className="accordion" style={{padding: "10px",cursor: "pointer",}}
-							onClick={() => handleClick(id)}>
-								<div className="accordion-title">{section.header}</div>
-								<i className="fa-regular fa-chevron-down"></i>
-							</div>
+	const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
-							{activeIndex === id && (
-							<div className="accordion-content" style={{ background: "white",padding: "10px",}}>
-								{section.subheading}
-								{section.content}
-								{section.subheading1}
-								{section.content1}
-							</div>
-							)}
-						</div>
-					))}
-			</div>
-        </section>
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
-		<section>
-			<div className='side-bar-fillter left-side'>
-				<h3>Filter</h3>
-				<div className="col-blogpost">
-				<select name='category_post' value={selectedCat} onChange={e=>setSelectedCat(e.target.value)}>
-					<option value="" >Select Category</option>
-					{
-						Catstate.map((cat_detail, id) => {
-							return(
-							<option value={cat_detail.slug} data-id={cat_detail.id}>{cat_detail.name}</option>
-							)
-						})
-					}
-				</select>
-				</div>
-				<h1>{selectedCat}</h1>
-			</div>
-			<div className='right-side post-listing'>
-				{postState.length > 0 ? (
-					postState.map((postData, id) => {
-						return(
-						<div className='post-item'>
-							<h3>{postData.title.rendered}</h3>
-							<p>{stripHtml(postData.excerpt.rendered)}</p>
-						</div>
-						)
-					})
-				) : (
-					<p>Loading posts...</p>
-				)}
-			</div>
-		</section>
-    </div>
-  );
 
+    return (
+        <div className="container">
+            <h1 className="text-center">Post Listing</h1>
+            <div className="totalpost" id="totalpost">
+                <span>{TotalPost} jobs available</span>
+            </div>
+
+            <div className="postlisting">
+                <div className="left-side side-bar-filter">
+                    <h3>Filter</h3>
+                    <div className="col-post-filter">
+                        <select
+                            name="category_post"
+                            value={selectedCat}
+                            onChange={(e) => setSelectedCat(e.target.value)}
+                        >
+                            <option value="">Select Category</option>
+                            {Catstate.map((cat_detail) => (
+                                <option key={cat_detail.id} value={cat_detail.slug}>
+                                    {cat_detail.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="right-side post-data">
+                    {postState.length > 0 ? (
+                        postState.map((postData, index) => (
+                            <div className="post-item" key={postData.id || index}>
+                                <h3>{postData.title.rendered}</h3>
+                                <p>{stripHtml(postData.excerpt.rendered)}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>Loading posts...</p>
+                    )}
+					
+					{/* Pagination */}
+					<div className="post-pagination">
+						<a className="page-numbers" onClick={handlePreviousPage} disabled={currentPage === 1}
+						> « Previous</a>
+						<span className="current-page">{`Page ${currentPage} of ${totalPages}`}</span>
+						<a className="page-numbers" onClick={handleNextPage} disabled={currentPage === totalPages}>
+						Next »</a>
+					</div>
+
+                </div>
+
+            </div>
+        </div>
+    );
 }
 
 export default Filter;

@@ -1,0 +1,87 @@
+/* Acumin Pro font-family */
+@font-face {
+    font-family: 'Acumin Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Acumin Pro'), url('./fonts/Acumin-RPro.woff') format('woff');
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: "acumin-pro",sans-serif;
+}
+.container{
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.text-center{
+    text-align: center;
+}
+.postlisting{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+.postlisting .side-bar-filter{
+    width: 14%;
+}
+.postlisting .post-data{
+    width: 80%;
+}
+.col-post-filter select{
+    width: 100%;
+    align-content: center;
+    border-radius: .25rem;
+    border-width: 1px;
+    border-style: solid;
+    line-height: 30px;
+    color: #c7c7c7;
+    outline: none;
+    height: 32px;
+}
+
+.post-data .post-item{
+    margin-bottom: .5rem;
+    border-radius: .25rem;
+    border: 1px solid #c7c7c7;
+    padding: .75rem 1rem;
+    transition: all 400ms ease-in-out;
+}
+
+/* pagination */
+.postlisting .post-data .post-pagination{
+    display: flex;
+    align-items: center;
+    padding: 30px;
+}
+.postlisting .post-data .post-pagination .current-page{
+    color: #441E5B;
+    padding: 5px 10px;
+}
+.postlisting .post-data .post-pagination a.page-numbers{
+    cursor: pointer;
+    color: #fff;
+    background: #441E5B;
+}
+.post-data .post-pagination .page-numbers{
+    align-items: center;
+    border-radius: .125rem;
+    font-size: 18px;
+    line-height: 18px;
+    display: inline-flex;
+    justify-content: center;
+    color: #404040;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+@media only screen and (max-width: 1600px) {
+    .container {
+        max-width: 1120px;
+    }
+}
