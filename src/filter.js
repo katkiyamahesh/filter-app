@@ -133,7 +133,7 @@ function Filter() {
 
     return (
         <div className="container">
-            <h1 className="text-center">Post Listing</h1>
+            <h1 className="text-center">Posts Listing</h1>
             <form action='' method='get' className='search-form'>
                 <input name="keyword" className="search-field post-search" value={SearchPost} onChange={searchPost} placeholder="Search all posts"/>
             </form>
