@@ -5,11 +5,20 @@
     font-weight: normal;
     src: local('Acumin Pro'), url('./fonts/Acumin-RPro.woff') format('woff');
 }
-
-body{
+@font-face {
+    font-family:'Museo';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Museo'), url('./fonts/Museo300-Regular.otf') format('opentype');
+}
+body {
     margin: 0;
     padding: 0;
-    font-family: "acumin-pro",sans-serif;
+    /* font-family: 'Acumin Pro', sans-serif; */
+    font-family: 'Museo',serif;
+}
+h1, h2, h3{
+    color: #441E5B;
 }
 .container{
     width: 100%;
@@ -28,10 +37,54 @@ body{
     justify-content: space-between;
 }
 .postlisting .side-bar-filter{
-    width: 14%;
+    width: 16%;
 }
 .postlisting .post-data{
     width: 80%;
+}
+.search-form {
+    max-width: 740px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+.search-form .post-search {
+    /* display: flex; */
+    width: 100%;
+    /* align-content: center; */
+    border-radius: .25rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #441E5B;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-indent: 1rem;
+    font-size: 18px;
+    line-height: 30px;
+    color: #484646;
+    outline: none;
+    height: 22px;
+    /* font-family: Museo, serif; */
+}
+.totalpost{
+    padding: 15px 0;
+    /* margin-left: 5.2rem; */
+    color: #404040;
+}
+.side-bar-filter .filter-heading{
+    display: flex ;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.filter-heading .clear-all{
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    color: #441E5B;
+    width: auto;
+    font-size: 14px;
+    line-height: 18px;
+    flex: 0 1 auto;
 }
 .col-post-filter select{
     width: 100%;
@@ -40,7 +93,7 @@ body{
     border-width: 1px;
     border-style: solid;
     line-height: 30px;
-    color: #c7c7c7;
+    color: #444;
     outline: none;
     height: 32px;
 }
@@ -52,6 +105,12 @@ body{
     padding: .75rem 1rem;
     transition: all 400ms ease-in-out;
 }
+.post-data .post-item h3{
+    text-decoration: none;
+    font-size: 22px;
+    line-height: 24px;
+    margin: 0;
+}
 
 /* pagination */
 .postlisting .post-data .post-pagination{
@@ -59,15 +118,14 @@ body{
     align-items: center;
     padding: 30px;
 }
-.postlisting .post-data .post-pagination .current-page{
+.postlisting .post-data .post-pagination .page-numbers.current {
+    background: #441E5B;
+    color: #fff;
+}
+/* .postlisting .post-data .post-pagination .current-page{
     color: #441E5B;
     padding: 5px 10px;
-}
-.postlisting .post-data .post-pagination a.page-numbers{
-    cursor: pointer;
-    color: #fff;
-    background: #441E5B;
-}
+} */
 .post-data .post-pagination .page-numbers{
     align-items: center;
     border-radius: .125rem;

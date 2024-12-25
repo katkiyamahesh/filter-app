@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.7f52bba1.css",
-    "main.js": "/static/js/main.e2d90745.js",
+    "main.css": "/static/css/main.f7db8cda.css",
+    "main.js": "/static/js/main.a7bac93d.js",
     "static/js/453.b3f2e399.chunk.js": "/static/js/453.b3f2e399.chunk.js",
+    "static/media/Museo300-Regular.otf": "/static/media/Museo300-Regular.208ab6511e068bd5e4cc.otf",
     "static/media/Acumin-RPro.woff": "/static/media/Acumin-RPro.619962d87c184a44be27.woff",
     "index.html": "/index.html",
-    "main.7f52bba1.css.map": "/static/css/main.7f52bba1.css.map",
-    "main.e2d90745.js.map": "/static/js/main.e2d90745.js.map",
+    "main.f7db8cda.css.map": "/static/css/main.f7db8cda.css.map",
+    "main.a7bac93d.js.map": "/static/js/main.a7bac93d.js.map",
     "453.b3f2e399.chunk.js.map": "/static/js/453.b3f2e399.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7f52bba1.css",
-    "static/js/main.e2d90745.js"
+    "static/css/main.f7db8cda.css",
+    "static/js/main.a7bac93d.js"
   ]
 }
