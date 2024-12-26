@@ -1,1 +1,1 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/06b9e3ca-f369-42a3-94a7-43ad74943d83/deploy-status)](https://app.netlify.com/sites/inspiring-sopapillas-275ede/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f44549bd-fc93-40d9-82fe-0a7cf1f8a6b9/deploy-status)](https://app.netlify.com/sites/wp-postapi/deploys)
